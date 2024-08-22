@@ -124,8 +124,8 @@
 		4FCBEF3A2C779B8800BE5555 /* Image Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				4FCBEF862C77A55900BE5555 /* Data */,
-				4FCBEF6B2C779C8200BE5555 /* Data Handler */,
+				4FCBEF862C77A55900BE5555 /* Model */,
+				4FCBEF6B2C779C8200BE5555 /* Data */,
 				4FCBEF6A2C779C7000BE5555 /* Repository */,
 				4FCBEF692C779C6500BE5555 /* ViewModel */,
 				4FCBEF672C779C4C00BE5555 /* View */,
@@ -178,6 +178,7 @@
 		4FCBEF682C779C5900BE5555 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				4FCBEF822C779EEF00BE5555 /* Errors.swift */,
 			);
 			path = "Support Files";
 			sourceTree = "<group>";
@@ -199,7 +200,7 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		4FCBEF6B2C779C8200BE5555 /* Data Handler */ = {
+		4FCBEF6B2C779C8200BE5555 /* Data */ = {
 			isa = PBXGroup;
 			children = (
 				4FCBEF7A2C779D1C00BE5555 /* ImageSyncService.swift */,
@@ -207,17 +208,16 @@
 				4FCBEF7E2C779D3900BE5555 /* ImageDownloader.swift */,
 				4FCBEF802C779D4800BE5555 /* ImageCacheService.swift */,
 			);
-			path = "Data Handler";
+			path = Data;
 			sourceTree = "<group>";
 		};
-		4FCBEF862C77A55900BE5555 /* Data */ = {
+		4FCBEF862C77A55900BE5555 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4FCBEF822C779EEF00BE5555 /* Errors.swift */,
 				4FCBEF782C779D1000BE5555 /* ImageEntity.swift */,
 				4FCBEF872C77A56A00BE5555 /* Image.swift */,
 			);
-			path = Data;
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
