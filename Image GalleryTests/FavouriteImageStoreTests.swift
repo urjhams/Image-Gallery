@@ -104,7 +104,19 @@ final class FavouriteImageStoreTests: XCTestCase {
   
   @MainActor
   func testIsFavourite() throws {
+    let img = Image(
+      id: 1,
+      albumId: 1,
+      title: "Test Image",
+      url: "https://example.com/image",
+      thumbnailUrl: "https://example.com/thumb"
+    )
     
+    XCTAssertFalse(sut.isFavourite(img))
+    
+    sut.addFavourite(img)
+    
+    XCTAssertTrue(sut.isFavourite(img))
   }
   
 }
