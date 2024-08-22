@@ -40,8 +40,7 @@ final class FavouriteImageStoreTests: XCTestCase {
     sut = ImageRepository(
       downloader: ImageDownloader(),
       cacheService: ImageCacheService(), 
-      favouriteStore: FavouriteImageStore(context: container.mainContext),
-      syncService: ImageSyncService(context: container.mainContext)
+      favouriteStore: FavouriteImageStore(context: container.mainContext)
     )
   }
   
@@ -100,6 +99,19 @@ final class FavouriteImageStoreTests: XCTestCase {
     sut.addFavourite(img1)
     
     XCTAssertTrue(sut.isFavourite(img1))
+  }
+  
+  @MainActor
+  func testSyncFavourite() throws {
+    sut.addFavourite(img1)
+    var favourites = try sut.fetchFavourites()
+    XCTAssertEqual(favourites.first?.title, img1.title)
+    
+    var copy = img1
+    copy.title = "new title image"
+    try sut.syncFavourites(from: [copy])
+    favourites = try sut.fetchFavourites()
+    XCTAssertEqual(favourites.first?.title, "new title image")
   }
   
 }

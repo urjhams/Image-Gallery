@@ -7,7 +7,7 @@
 
 import Foundation
 
-actor ImageCacheService {
+class ImageCacheService {
   private let cache = NSCache<NSString, NSData>()
   
   func getImage(for key: String) -> Data? {

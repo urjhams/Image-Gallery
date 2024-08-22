@@ -24,8 +24,7 @@ final class DownloadServiceTests: XCTestCase {
     sut = ImageRepository(
       downloader: ImageDownloader(),
       cacheService: ImageCacheService(),
-      favouriteStore: FavouriteImageStore(context: container.mainContext),
-      syncService: ImageSyncService(context: container.mainContext)
+      favouriteStore: FavouriteImageStore(context: container.mainContext)
     )
   }
   

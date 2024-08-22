@@ -11,27 +11,23 @@ protocol Repository {
   var downloader: ImageDownloader { get }
   var cacheService: ImageCacheService { get }
   var favouriteStore: FavouriteImageStore { get }
-  var syncService: ImageSyncService { get }
 }
 
 class ImageRepository: Repository {
   internal let downloader: ImageDownloader
   internal let cacheService: ImageCacheService
   internal let favouriteStore: FavouriteImageStore
-  internal let syncService: ImageSyncService
   
   private let decoder = JSONDecoder()
   
   init(
     downloader: ImageDownloader,
     cacheService: ImageCacheService,
-    favouriteStore: FavouriteImageStore,
-    syncService: ImageSyncService
+    favouriteStore: FavouriteImageStore
   ) {
     self.downloader = downloader
     self.cacheService = cacheService
     self.favouriteStore = favouriteStore
-    self.syncService = syncService
   }
 }
 
@@ -52,6 +48,10 @@ extension ImageRepository {
   
   func fetchFavourites() throws -> [ImageEntity] {
     try favouriteStore.fetchFavourites()
+  }
+  
+  func syncFavourites(from fetchedImages: [any ImageInterface]) throws {
+    try favouriteStore.syncFavourites(from: fetchedImages)
   }
 }
 
@@ -74,9 +74,4 @@ extension ImageRepository {
   func getImage(from url: URL) async throws -> Data {
     try await downloader.downloadImage(from: url)
   }
-}
-
-/// sync service
-extension ImageRepository {
-  
 }

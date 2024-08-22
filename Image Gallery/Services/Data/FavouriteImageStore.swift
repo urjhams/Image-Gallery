@@ -43,4 +43,17 @@ class FavouriteImageStore {
     let descriptor = FetchDescriptor<ImageEntity>()
     return try context.fetch(descriptor)
   }
+  
+  func syncFavourites(from fetchedImages: [any ImageInterface]) throws {
+    let currentFavourites = try fetchFavourites()
+    let currentIds = currentFavourites.map(\.id)
+    
+    fetchedImages
+      .filter { currentIds.contains($0.id) }
+      .map(ImageEntity.init)
+      .forEach { context.insert($0) }
+    
+    try context.save()
+  }
+  
 }
