@@ -26,6 +26,7 @@
 		4FCBEF7D2C779D2D00BE5555 /* FavouriteImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCBEF7C2C779D2D00BE5555 /* FavouriteImageStore.swift */; };
 		4FCBEF7F2C779D3900BE5555 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCBEF7E2C779D3900BE5555 /* ImageDownloader.swift */; };
 		4FCBEF812C779D4800BE5555 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCBEF802C779D4800BE5555 /* ImageCacheService.swift */; };
+		4FCBEF832C779EEF00BE5555 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCBEF822C779EEF00BE5555 /* Errors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		4FCBEF7C2C779D2D00BE5555 /* FavouriteImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteImageStore.swift; sourceTree = "<group>"; };
 		4FCBEF7E2C779D3900BE5555 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		4FCBEF802C779D4800BE5555 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
+		4FCBEF822C779EEF00BE5555 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 				4FCBEF7C2C779D2D00BE5555 /* FavouriteImageStore.swift */,
 				4FCBEF7E2C779D3900BE5555 /* ImageDownloader.swift */,
 				4FCBEF802C779D4800BE5555 /* ImageCacheService.swift */,
+				4FCBEF822C779EEF00BE5555 /* Errors.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FCBEF832C779EEF00BE5555 /* Errors.swift in Sources */,
 				4FCBEF812C779D4800BE5555 /* ImageCacheService.swift in Sources */,
 				4FCBEF3E2C779B8800BE5555 /* ContentView.swift in Sources */,
 				4FCBEF732C779CE000BE5555 /* GalleryViewModel.swift in Sources */,
