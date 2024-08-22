@@ -45,12 +45,6 @@ protocol FavouriteService {
   func syncFavourites(from fetchedImages: [any ImageInterface]) throws
 }
 
-protocol Repository {
-  var downloader: ImageDownloader { get }
-  var cacheService: ImageCacheService { get }
-  var favouriteStore: FavouriteImageStore { get }
-}
-
 class ImageRepository: CacheService, FavouriteService, DownloadService {
   internal let downloader: ImageDownloader
   internal let cacheService: ImageCacheService
