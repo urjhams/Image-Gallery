@@ -120,7 +120,7 @@
 		4FCBEF3A2C779B8800BE5555 /* Image Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				4FCBEF6B2C779C8200BE5555 /* Data */,
+				4FCBEF6B2C779C8200BE5555 /* Data Handler */,
 				4FCBEF6A2C779C7000BE5555 /* Repository */,
 				4FCBEF692C779C6500BE5555 /* ViewModel */,
 				4FCBEF672C779C4C00BE5555 /* View */,
@@ -193,7 +193,7 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		4FCBEF6B2C779C8200BE5555 /* Data */ = {
+		4FCBEF6B2C779C8200BE5555 /* Data Handler */ = {
 			isa = PBXGroup;
 			children = (
 				4FCBEF782C779D1000BE5555 /* ImageEntity.swift */,
@@ -203,7 +203,7 @@
 				4FCBEF802C779D4800BE5555 /* ImageCacheService.swift */,
 				4FCBEF822C779EEF00BE5555 /* Errors.swift */,
 			);
-			path = Data;
+			path = "Data Handler";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
