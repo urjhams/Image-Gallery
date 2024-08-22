@@ -15,7 +15,7 @@ final class DownloadServiceTests: XCTestCase {
   
   var container: ModelContainer!
   
-  var sut: ImageRepository!
+  var sut: DownloadService!
   
   @MainActor
   override func setUpWithError() throws {

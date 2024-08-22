@@ -10,29 +10,39 @@ import XCTest
 import SwiftData
 
 final class ImageCacheServiceTests: XCTestCase {
-
-  var cacheService: ImageCacheService!
   
+  let config = ModelConfiguration(isStoredInMemoryOnly: true)
+  
+  var container: ModelContainer!
+
+  var sut: CacheService!
+  
+  @MainActor
   override func setUpWithError() throws {
     try super.setUpWithError()
-    cacheService = ImageCacheService()
+    container = try ModelContainer(for: ImageEntity.self, configurations: config)
+    sut = ImageRepository(
+      downloader: ImageDownloader(),
+      cacheService: ImageCacheService(),
+      favouriteStore: FavouriteImageStore(context: container.mainContext)
+    )
   }
   
   override func tearDownWithError() throws {
-    cacheService = nil
+    sut = nil
     try super.tearDownWithError()
   }
   
   func testSetAndGetImage() {
     let data = Data([0, 1, 2, 3])
-    cacheService.setImage(data, for: "testKey")
+    sut.setImage(data, for: "testKey")
     
-    let cachedData = cacheService.getImage(for: "testKey")
+    let cachedData = sut.getImage(for: "testKey")
     XCTAssertEqual(cachedData, data)
   }
   
   func testGetImageNotInCache() {
-    let cachedData = cacheService.getImage(for: "nonexistentKey")
+    let cachedData = sut.getImage(for: "nonexistentKey")
     XCTAssertNil(cachedData)
   }
 }

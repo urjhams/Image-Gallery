@@ -7,13 +7,51 @@
 
 import Foundation
 
+protocol CacheService {
+  var cacheService: ImageCacheService { get }
+  
+  func getImage(for key: String) -> Data?
+  func setImage(_ data: Data, for key: String)
+}
+
+extension CacheService {
+  func getImage(for key: String) -> Data? {
+    cacheService.getImage(for: key)
+  }
+  
+  func setImage(_ data: Data, for key: String) {
+    cacheService.setImage(data, for: key)
+  }
+}
+
+protocol DownloadService {
+  var downloader: ImageDownloader { get }
+  
+  func fetchImages() async throws -> [Image]
+  func getImage(from url: URL) async throws -> Data
+}
+
+protocol FavouriteService {
+  var favouriteStore: FavouriteImageStore { get }
+  
+  func addFavourite(_ image: any ImageInterface)
+  
+  func removeFavourite(_ image: ImageEntity)
+  
+  func isFavourite(_ image: any ImageInterface) -> Bool
+  
+  func fetchFavourites() throws -> [ImageEntity]
+  
+  func syncFavourites(from fetchedImages: [any ImageInterface]) throws
+}
+
 protocol Repository {
   var downloader: ImageDownloader { get }
   var cacheService: ImageCacheService { get }
   var favouriteStore: FavouriteImageStore { get }
 }
 
-class ImageRepository: Repository {
+class ImageRepository: CacheService, FavouriteService, DownloadService {
   internal let downloader: ImageDownloader
   internal let cacheService: ImageCacheService
   internal let favouriteStore: FavouriteImageStore
