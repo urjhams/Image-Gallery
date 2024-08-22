@@ -124,9 +124,8 @@
 		4FCBEF3A2C779B8800BE5555 /* Image Gallery */ = {
 			isa = PBXGroup;
 			children = (
+				4FCBEF8F2C77CD1900BE5555 /* Services */,
 				4FCBEF862C77A55900BE5555 /* Model */,
-				4FCBEF6B2C779C8200BE5555 /* Data */,
-				4FCBEF6A2C779C7000BE5555 /* Repository */,
 				4FCBEF692C779C6500BE5555 /* ViewModel */,
 				4FCBEF672C779C4C00BE5555 /* View */,
 				4FCBEF682C779C5900BE5555 /* Support Files */,
@@ -218,6 +217,15 @@
 				4FCBEF872C77A56A00BE5555 /* Image.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4FCBEF8F2C77CD1900BE5555 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4FCBEF6B2C779C8200BE5555 /* Data */,
+				4FCBEF6A2C779C7000BE5555 /* Repository */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
