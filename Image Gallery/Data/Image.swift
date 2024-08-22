@@ -7,10 +7,17 @@
 
 import Foundation
 
-struct Image: Identifiable, Codable {
-  let id: Int
-  let albumId: Int
-  let title: String
-  let url: String
-  let thumbnailUrl: String
+protocol ImageInterface: Identifiable {
+  var id: Int { get }
+  var title: String { get }
+  var url: String { get }
+  var thumbnailUrl: String { get }
+}
+
+struct Image: ImageInterface, Codable {
+  var id: Int
+  var albumId: Int
+  var title: String
+  var url: String
+  var thumbnailUrl: String
 }

@@ -16,12 +16,15 @@ class FavouriteImageStore {
     self.context = context
   }
   
-  func addFavourite(_ image: Image) {
-    
+  func addFavourite(_ image: any ImageInterface) {
+    let entity = ImageEntity(from: image)
+    context.insert(entity)
+    try? context.save()
   }
   
   func removeFavourite(_ image: ImageEntity) {
-    
+    context.delete(image)
+    try? context.save()
   }
   
   func isFavourite(_ image: Image) -> Bool {

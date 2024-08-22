@@ -21,4 +21,11 @@ class ImageEntity: Identifiable {
     self.url = url
     self.thumbnailURL = thumbnailURL
   }
+  
+  init(from interface: any ImageInterface) {
+    self.id = interface.id
+    self.title = interface.title
+    self.url = interface.url
+    self.thumbnailURL = interface.thumbnailUrl
+  }
 }
