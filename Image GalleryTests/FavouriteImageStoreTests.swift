@@ -17,6 +17,22 @@ final class FavouriteImageStoreTests: XCTestCase {
   
   var sut: FavouriteImageStore!
   
+  let img1 = Image(
+    id: 1,
+    albumId: 1,
+    title: "Test Image",
+    url: "https://example.com/image",
+    thumbnailUrl: "https://example.com/thumb"
+  )
+  
+  let img2 = Image(
+    id: 2,
+    albumId: 1,
+    title: "Test Image 2",
+    url: "https://example.com/image2",
+    thumbnailUrl: "https://example.com/thumb"
+  )
+  
   @MainActor
   override func setUpWithError() throws {
     try super.setUpWithError()
@@ -31,7 +47,6 @@ final class FavouriteImageStoreTests: XCTestCase {
   }
   
   @MainActor
-
   func testFetchEmpty() throws {
     let favourites = try sut.fetchFavourites()
     XCTAssertEqual(favourites.count, 0)
@@ -39,30 +54,15 @@ final class FavouriteImageStoreTests: XCTestCase {
   
   @MainActor
   func testAddFavourite() throws {
-    let img = Image(
-      id: 1,
-      albumId: 1,
-      title: "Test Image",
-      url: "https://example.com/image",
-      thumbnailUrl: "https://example.com/thumb"
-    )
-    
-    sut.addFavourite(img)
+
+    sut.addFavourite(img1)
     
     var favourites = try sut.fetchFavourites()
     
     XCTAssertEqual(favourites.count, 1)
-    XCTAssertEqual(favourites.first?.id, img.id)
-    XCTAssertEqual(favourites.first?.title, img.title)
-    
-    let img2 = Image(
-      id: 2,
-      albumId: 1,
-      title: "Test Image 2",
-      url: "https://example.com/image2",
-      thumbnailUrl: "https://example.com/thumb"
-    )
-    
+    XCTAssertEqual(favourites.first?.id, img1.id)
+    XCTAssertEqual(favourites.first?.title, img1.title)
+        
     sut.addFavourite(img2)
     
     favourites = try sut.fetchFavourites()
@@ -72,23 +72,8 @@ final class FavouriteImageStoreTests: XCTestCase {
   
   @MainActor
   func testRemoveFavourite() throws {
-    let img1 = Image(
-      id: 1,
-      albumId: 1,
-      title: "Test Image",
-      url: "https://example.com/image",
-      thumbnailUrl: "https://example.com/thumb"
-    )
     
     sut.addFavourite(img1)
-    
-    let img2 = Image(
-      id: 2,
-      albumId: 1,
-      title: "Test Image 2",
-      url: "https://example.com/image2",
-      thumbnailUrl: "https://example.com/thumb"
-    )
     
     sut.addFavourite(img2)
     var favourites = try sut.fetchFavourites()
@@ -104,19 +89,12 @@ final class FavouriteImageStoreTests: XCTestCase {
   
   @MainActor
   func testIsFavourite() throws {
-    let img = Image(
-      id: 1,
-      albumId: 1,
-      title: "Test Image",
-      url: "https://example.com/image",
-      thumbnailUrl: "https://example.com/thumb"
-    )
     
-    XCTAssertFalse(sut.isFavourite(img))
+    XCTAssertFalse(sut.isFavourite(img1))
     
-    sut.addFavourite(img)
+    sut.addFavourite(img1)
     
-    XCTAssertTrue(sut.isFavourite(img))
+    XCTAssertTrue(sut.isFavourite(img1))
   }
   
 }
