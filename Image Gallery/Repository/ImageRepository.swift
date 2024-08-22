@@ -7,11 +7,20 @@
 
 import Foundation
 
-class ImageRepository {
-  private let downloader: ImageDownloader
-  private let cacheService: ImageCacheService
-  private let favouriteStore: FavouriteImageStore
-  private let syncService: ImageSyncService
+protocol Repository {
+  var downloader: ImageDownloader { get }
+  var cacheService: ImageCacheService { get }
+  var favouriteStore: FavouriteImageStore { get }
+  var syncService: ImageSyncService { get }
+}
+
+class ImageRepository: Repository {
+  internal let downloader: ImageDownloader
+  internal let cacheService: ImageCacheService
+  internal let favouriteStore: FavouriteImageStore
+  internal let syncService: ImageSyncService
+  
+  private let decoder = JSONDecoder()
   
   init(
     downloader: ImageDownloader,
@@ -46,9 +55,25 @@ extension ImageRepository {
   }
 }
 
-/// network service
+/// download service
 extension ImageRepository {
+  func fetchImages() async throws -> [Image] {
+    guard let url = URL(string: "https://jsonplaceholder.typicode.com/photos") else {
+      throw NetworkError.badURL
+    }
+    
+    let (data, response) = try await URLSession.shared.data(from: url)
+    
+    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+      throw NetworkError.invalidResponse
+    }
+    
+    return try decoder.decode([Image].self, from: data)
+  }
   
+  func getImage(from url: URL) async throws -> Data {
+    try await downloader.downloadImage(from: url)
+  }
 }
 
 /// sync service
