@@ -15,7 +15,7 @@ final class FavouriteImageStoreTests: XCTestCase {
   
   var container: ModelContainer!
   
-  var sut: FavouriteImageStore!
+  var sut: ImageRepository!
   
   let img1 = Image(
     id: 1,
@@ -37,7 +37,12 @@ final class FavouriteImageStoreTests: XCTestCase {
   override func setUpWithError() throws {
     try super.setUpWithError()
     container = try ModelContainer(for: ImageEntity.self, configurations: config)
-    sut = FavouriteImageStore(context: container.mainContext)
+    sut = ImageRepository(
+      downloader: ImageDownloader(),
+      cacheService: ImageCacheService(), 
+      favouriteStore: FavouriteImageStore(context: container.mainContext),
+      syncService: ImageSyncService(context: container.mainContext)
+    )
   }
   
   override func tearDownWithError() throws {

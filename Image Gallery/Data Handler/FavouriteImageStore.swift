@@ -27,10 +27,9 @@ class FavouriteImageStore {
     try? context.save()
   }
   
-  func isFavourite(_ image: Image) -> Bool {
-    let predicate = #Predicate<ImageEntity> { img in
-      img.id == image.id
-    }
+  func isFavourite(_ image: any ImageInterface) -> Bool {
+    let id = image.id
+    let predicate = #Predicate<ImageEntity> { $0.id == id }
     var descriptor = FetchDescriptor<ImageEntity>(predicate: predicate)
     descriptor.fetchLimit = 1
     guard let result = try? context.fetch(descriptor), result.count == 1 else {
