@@ -19,4 +19,4 @@ Use MVVM architecture, the system is seperated into 4 main layers:
 SwiftUI, SwiftData, Concurrency, XCTest
 
 ## Additional library
-- swiftui-cached-async-image (https://github.com/apple/swift-docc-plugin): for the usage of caching `AsyncImage`.
+- [swiftui-cached-async-image](https://github.com/lorenzofiamingo/swiftui-cached-async-image): for the usage of caching `AsyncImage`.
