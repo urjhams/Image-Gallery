@@ -17,7 +17,7 @@ final class FavouriteImageStoreTests: XCTestCase {
   
   var sut: ImageRepository!
   
-  let img1 = Image(
+  var img1Original = Image(
     id: 1,
     albumId: 1,
     title: "Test Image",
@@ -25,13 +25,15 @@ final class FavouriteImageStoreTests: XCTestCase {
     thumbnailUrl: "https://example.com/thumb"
   )
   
-  let img2 = Image(
+  lazy var img1 = ImageEntity(from: img1Original)
+  
+  let img2 = ImageEntity(from: Image(
     id: 2,
     albumId: 1,
     title: "Test Image 2",
     url: "https://example.com/image2",
     thumbnailUrl: "https://example.com/thumb"
-  )
+  ))
   
   @MainActor
   override func setUpWithError() throws {
@@ -93,11 +95,11 @@ final class FavouriteImageStoreTests: XCTestCase {
   @MainActor
   func testIsFavourite() throws {
     
-    XCTAssertFalse(sut.isFavourite(img1, in: container.mainContext))
+    XCTAssertFalse(sut.isFavourite(id: img1.id, in: container.mainContext))
     
     sut.addFavourite(img1, in: container.mainContext)
     
-    XCTAssertTrue(sut.isFavourite(img1, in: container.mainContext))
+    XCTAssertTrue(sut.isFavourite(id: img1.id, in: container.mainContext))
   }
   
   @MainActor
@@ -106,7 +108,7 @@ final class FavouriteImageStoreTests: XCTestCase {
     var favourites = try sut.fetchFavourites(in: container.mainContext)
     XCTAssertEqual(favourites.first?.title, img1.title)
     
-    var copy = img1
+    var copy = img1Original
     copy.title = "new title image"
     try sut.syncFavourites(from: [copy], in: container.mainContext)
     favourites = try sut.fetchFavourites(in: container.mainContext)

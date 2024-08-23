@@ -25,11 +25,11 @@ class GalleryViewModel {
     self.images = images
   }
   
-  func toggleFavourite(_ image: Image, in context: ModelContext) {
+  func toggleFavourite(_ image: ImageEntity, in context: ModelContext) {
     repository.toggleFavourite(image, in: context)
   }
   
-  func isFavourite(_ image: Image, in context: ModelContext) -> Bool {
-    repository.isFavourite(image, in: context)
+  func isFavourite(id: Int, in context: ModelContext) -> Bool {
+    repository.isFavourite(id: id, in: context)
   }
 }

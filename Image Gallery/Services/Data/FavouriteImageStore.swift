@@ -9,9 +9,8 @@ import Foundation
 import SwiftData
 
 class FavouriteImageStore {
-  func addFavourite(_ image: Image, context: ModelContext) {
-    let entity = ImageEntity(from: image)
-    context.insert(entity)
+  func addFavourite(_ image: ImageEntity, context: ModelContext) {
+    context.insert(image)
     try? context.save()
   }
   
@@ -26,16 +25,15 @@ class FavouriteImageStore {
     try? context.save()
   }
   
-  func toggleFavourite(_ image: Image, context: ModelContext) {
-    if isFavourite(image, context: context) {
+  func toggleFavourite(_ image: ImageEntity, context: ModelContext) {
+    if isFavourite(id: image.id, context: context) {
       removeFavourite(id: image.id, context: context)
     } else {
       addFavourite(image, context: context)
     }
   }
   
-  func isFavourite(_ image: Image, context: ModelContext) -> Bool {
-    let id = image.id
+  func isFavourite(id: Int, context: ModelContext) -> Bool {
     let predicate = #Predicate<ImageEntity> { $0.id == id }
     var descriptor = FetchDescriptor<ImageEntity>(predicate: predicate)
     descriptor.fetchLimit = 1

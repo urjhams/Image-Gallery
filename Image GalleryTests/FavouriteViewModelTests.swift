@@ -37,7 +37,7 @@ final class FavouriteViewModelTests: XCTestCase {
     let image = Image(id: 1, albumId: 1, title: "Photo 1", url: "url1", thumbnailUrl: "thumb1")
     
     // Toggle favourite to add
-    mock.addFavourite(image, in: context)
+    mock.addFavourite(.init(from: image), in: context)
     
     viewModel.loadFavourite(in: context)
     

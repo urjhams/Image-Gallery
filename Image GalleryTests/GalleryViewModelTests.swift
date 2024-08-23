@@ -18,7 +18,7 @@ class MockRepository: Repository {
   
   var mockImages: [Image] = []
     
-  @MainActor func addFavourite(_ image: Image, in context: ModelContext) {
+  @MainActor func addFavourite(_ image: ImageEntity, in context: ModelContext) {
     favouriteStore.addFavourite(image, context: context)
   }
   
@@ -26,8 +26,8 @@ class MockRepository: Repository {
     favouriteStore.removeFavourite(id: id, context: context)
   }
   
-  @MainActor func isFavourite(_ image: Image, in context: ModelContext) -> Bool {
-    favouriteStore.isFavourite(image, context: context)
+  @MainActor func isFavourite(id: Int, in context: ModelContext) -> Bool {
+    favouriteStore.isFavourite(id: id, context: context)
   }
   
   @MainActor func fetchFavourites(in context: ModelContext) throws -> [ImageEntity] {
@@ -38,7 +38,7 @@ class MockRepository: Repository {
     try favouriteStore.syncFavourites(from: fetchedImages, context: context)
   }
   
-  @MainActor func toggleFavourite(_ image: Image_Gallery.Image, in context: ModelContext) {
+  @MainActor func toggleFavourite(_ image: ImageEntity, in context: ModelContext) {
     favouriteStore.toggleFavourite(image, context: context)
   }
   
@@ -90,15 +90,15 @@ final class GalleryViewModelTests: XCTestCase {
     let image = Image(id: 1, albumId: 1, title: "Photo 1", url: "url1", thumbnailUrl: "thumb1")
     
     // Initially, it should not be a favourite
-    XCTAssertFalse(viewModel.isFavourite(image, in: context))
+    XCTAssertFalse(viewModel.isFavourite(id: image.id, in: context))
     
     // Toggle favourite to add
-    viewModel.toggleFavourite(image, in: context)
-    XCTAssertTrue(viewModel.isFavourite(image, in: context))
+    viewModel.toggleFavourite(.init(from: image), in: context)
+    XCTAssertTrue(viewModel.isFavourite(id: image.id, in: context))
     
     // Toggle favourite to remove
-    viewModel.toggleFavourite(image, in: context)
-    XCTAssertFalse(viewModel.isFavourite(image, in: context))
+    viewModel.toggleFavourite(.init(from: image), in: context)
+    XCTAssertFalse(viewModel.isFavourite(id: image.id, in: context))
   }
   
 }

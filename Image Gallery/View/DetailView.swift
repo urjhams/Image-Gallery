@@ -11,7 +11,7 @@ import CachedAsyncImage
 struct DetailView: View {
   @Environment(\.modelContext) private var modelContext
   @Environment(ImageRepository.self) private var repository
-  let image: Image
+  let image: ImageEntity
   @State var isFavourte = false
   
   var body: some View {
@@ -27,7 +27,7 @@ struct DetailView: View {
       }
     }
     .onAppear {
-      isFavourte = repository.isFavourite(image, in: modelContext)
+      isFavourte = repository.isFavourite(id: image.id, in: modelContext)
     }
     .toolbar {
       ToolbarItem(placement: .navigationBarTrailing) {
@@ -36,7 +36,7 @@ struct DetailView: View {
           systemImage: isFavourte ? "heart.fill" : "heart"
         ) {
           repository.toggleFavourite(image, in: modelContext)
-          isFavourte = repository.isFavourite(image, in: modelContext)
+          isFavourte = repository.isFavourite(id: image.id, in: modelContext)
         }
       }
     }
@@ -47,11 +47,13 @@ struct DetailView: View {
   @State var repo = ImageRepository(downloader: .init(), favouriteStore: .init())
   return DetailView(
     image: .init(
-      id: 1,
-      albumId: 1,
-      title: "bullElk",
-      url: Bundle.main.url(forResource: "bullElk", withExtension: "jpg")!.absoluteString,
-      thumbnailUrl: "https://sample-rul.com")
+      from: .init(
+        id: 1,
+        albumId: 1,
+        title: "bullElk",
+        url: Bundle.main.url(forResource: "bullElk", withExtension: "jpg")!.absoluteString,
+        thumbnailUrl: "https://sample-rul.com")
+    )
   )
   .environment(repo)
 }

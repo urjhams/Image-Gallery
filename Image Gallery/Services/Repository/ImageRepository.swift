@@ -18,13 +18,13 @@ protocol DownloadService {
 protocol FavouriteService {
   var favouriteStore: FavouriteImageStore { get }
   
-  func addFavourite(_ image: Image, in context: ModelContext)
+  func addFavourite(_ image: ImageEntity, in context: ModelContext)
   
   func removeFavourite(id: Int, in context: ModelContext)
   
-  func toggleFavourite(_ image: Image, in context: ModelContext)
+  func toggleFavourite(_ image: ImageEntity, in context: ModelContext)
   
-  func isFavourite(_ image: Image, in context: ModelContext) -> Bool
+  func isFavourite(id: Int, in context: ModelContext) -> Bool
   
   func fetchFavourites(in context: ModelContext) throws -> [ImageEntity]
   
@@ -51,7 +51,7 @@ class ImageRepository: NSObject, FavouriteService, DownloadService {
 /// favourite storage
 @MainActor
 extension ImageRepository {
-  func addFavourite(_ image: Image, in context: ModelContext) {
+  func addFavourite(_ image: ImageEntity, in context: ModelContext) {
     favouriteStore.addFavourite(image, context: context)
   }
   
@@ -59,8 +59,8 @@ extension ImageRepository {
     favouriteStore.removeFavourite(id: id, context: context)
   }
   
-  func isFavourite(_ image: Image, in context: ModelContext) -> Bool {
-    favouriteStore.isFavourite(image, context: context)
+  func isFavourite(id: Int, in context: ModelContext) -> Bool {
+    favouriteStore.isFavourite(id: id, context: context)
   }
   
   func fetchFavourites(in context: ModelContext) throws -> [ImageEntity] {
@@ -71,7 +71,7 @@ extension ImageRepository {
     try favouriteStore.syncFavourites(from: fetchedImages, context: context)
   }
   
-  func toggleFavourite(_ image: Image, in context: ModelContext) {
+  func toggleFavourite(_ image: ImageEntity, in context: ModelContext) {
     favouriteStore.toggleFavourite(image, context: context)
   }
 }
