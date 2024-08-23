@@ -28,7 +28,7 @@ struct FavouriteView: View {
           }
         }
       }
-      .navigationTitle("Gallery")
+      .navigationTitle("Favourte")
       .task {
         viewModel.loadFavourite(in: modelContext)
       }

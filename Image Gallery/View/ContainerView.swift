@@ -18,6 +18,11 @@ struct ContainerView: View {
         .tabItem {
           Label("Gallery", systemImage: "photo.stack")
         }
+      
+      FavouriteView(viewModel: .init(service: repository))
+        .tabItem {
+          Label("Favourite", systemImage: "heart.circle")
+        }
     }
   }
 }
