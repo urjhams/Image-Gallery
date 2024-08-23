@@ -22,9 +22,7 @@ struct DetailView: View {
 }
 
 #Preview {
-  if let url = Bundle.main.url(forResource: "bullElk", withExtension: "jpg") {
-    DetailView(item: Item(url: url))
-  } else {
-    Spacer()
-  }
+  DetailView(
+    item: Item(url: Bundle.main.url(forResource: "bullElk", withExtension: "jpg")!)
+  )
 }

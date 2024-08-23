@@ -16,7 +16,7 @@ class FavouriteImageStore {
     self.context = context
   }
   
-  func addFavourite(_ image: any ImageInterface) {
+  func addFavourite(_ image: Image) {
     let entity = ImageEntity(from: image)
     context.insert(entity)
     try? context.save()
@@ -27,7 +27,7 @@ class FavouriteImageStore {
     try? context.save()
   }
   
-  func isFavourite(_ image: any ImageInterface) -> Bool {
+  func isFavourite(_ image: Image) -> Bool {
     let id = image.id
     let predicate = #Predicate<ImageEntity> { $0.id == id }
     var descriptor = FetchDescriptor<ImageEntity>(predicate: predicate)
@@ -44,7 +44,7 @@ class FavouriteImageStore {
     return try context.fetch(descriptor)
   }
   
-  func syncFavourites(from fetchedImages: [any ImageInterface]) throws {
+  func syncFavourites(from fetchedImages: [Image]) throws {
     let currentFavourites = try fetchFavourites()
     let currentIds = currentFavourites.map(\.id)
     

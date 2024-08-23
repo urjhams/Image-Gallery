@@ -26,9 +26,8 @@ struct ItemView: View {
 }
 
 #Preview {
-  if let url = Bundle.main.url(forResource: "bullElk", withExtension: "jpg") {
-    ItemView(size: 300, item: Item(url: url))
-  } else {
-    Spacer()
-  }
+  ItemView(
+    size: 300, 
+    item: Item(url: Bundle.main.url(forResource: "bullElk", withExtension: "jpg")!)
+  )
 }

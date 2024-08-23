@@ -15,7 +15,7 @@ class ImageEntity: Identifiable {
   var url: String
   var thumbnailURL: String
   
-  init(from interface: any ImageInterface) {
+  init(from interface: Image) {
     self.id = interface.id
     self.title = interface.title
     self.url = interface.url

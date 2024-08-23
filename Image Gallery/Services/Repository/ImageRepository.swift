@@ -12,6 +12,7 @@ protocol CacheService {
   
   func getImage(for key: String) -> Data?
   func setImage(_ data: Data, for key: String)
+  func removeImage(for key: String)
 }
 
 extension CacheService {
@@ -21,6 +22,10 @@ extension CacheService {
   
   func setImage(_ data: Data, for key: String) {
     cacheService.setImage(data, for: key)
+  }
+  
+  func removeImage(for key: String) {
+    cacheService.removeImage(for: key)
   }
 }
 
@@ -34,15 +39,15 @@ protocol DownloadService {
 protocol FavouriteService {
   var favouriteStore: FavouriteImageStore { get }
   
-  func addFavourite(_ image: any ImageInterface)
+  func addFavourite(_ image: Image)
   
   func removeFavourite(_ image: ImageEntity)
   
-  func isFavourite(_ image: any ImageInterface) -> Bool
+  func isFavourite(_ image: Image) -> Bool
   
   func fetchFavourites() throws -> [ImageEntity]
   
-  func syncFavourites(from fetchedImages: [any ImageInterface]) throws
+  func syncFavourites(from fetchedImages: [Image]) throws
 }
 
 class ImageRepository: CacheService, FavouriteService, DownloadService {
@@ -66,7 +71,7 @@ class ImageRepository: CacheService, FavouriteService, DownloadService {
 /// favourite storage
 @MainActor
 extension ImageRepository {
-  func addFavourite(_ image: any ImageInterface) {
+  func addFavourite(_ image: Image) {
     favouriteStore.addFavourite(image)
   }
   
@@ -74,7 +79,7 @@ extension ImageRepository {
     favouriteStore.removeFavourite(image)
   }
   
-  func isFavourite(_ image: any ImageInterface) -> Bool {
+  func isFavourite(_ image: Image) -> Bool {
     favouriteStore.isFavourite(image)
   }
   
@@ -82,7 +87,7 @@ extension ImageRepository {
     try favouriteStore.fetchFavourites()
   }
   
-  func syncFavourites(from fetchedImages: [any ImageInterface]) throws {
+  func syncFavourites(from fetchedImages: [Image]) throws {
     try favouriteStore.syncFavourites(from: fetchedImages)
   }
 }

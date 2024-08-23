@@ -17,4 +17,8 @@ class ImageCacheService {
   func setImage(_ data: Data, for key: String) {
     cache.setObject(data as NSData, forKey: key as NSString)
   }
+  
+  func removeImage(for key: String) {
+    cache.removeObject(forKey: key as NSString)
+  }
 }

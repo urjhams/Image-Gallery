@@ -30,6 +30,7 @@
 		4FCBEF952C788EFF00BE5555 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCBEF942C788EFF00BE5555 /* ItemView.swift */; };
 		4FCBEF972C788F3000BE5555 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCBEF962C788F3000BE5555 /* Item.swift */; };
 		4FCBEF992C78906200BE5555 /* bullElk.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4FCBEF982C78906200BE5555 /* bullElk.jpg */; };
+		4FCBEF9B2C78936C00BE5555 /* GalleryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCBEF9A2C78936C00BE5555 /* GalleryViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		4FCBEF942C788EFF00BE5555 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		4FCBEF962C788F3000BE5555 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		4FCBEF982C78906200BE5555 /* bullElk.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bullElk.jpg; sourceTree = "<group>"; };
+		4FCBEF9A2C78936C00BE5555 /* GalleryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 				4FCBEF892C77A7C600BE5555 /* FavouriteImageStoreTests.swift */,
 				4FCBEF8D2C77C85900BE5555 /* DownloadServiceTests.swift */,
 				4FCBEF922C77D11700BE5555 /* ImageCacheServiceTests.swift */,
+				4FCBEF9A2C78936C00BE5555 /* GalleryViewModelTests.swift */,
 			);
 			path = "Image GalleryTests";
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FCBEF8A2C77A7C600BE5555 /* FavouriteImageStoreTests.swift in Sources */,
+				4FCBEF9B2C78936C00BE5555 /* GalleryViewModelTests.swift in Sources */,
 				4FCBEF932C77D11700BE5555 /* ImageCacheServiceTests.swift in Sources */,
 				4FCBEF8E2C77C85900BE5555 /* DownloadServiceTests.swift in Sources */,
 			);
