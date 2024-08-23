@@ -32,7 +32,7 @@ protocol FavouriteService {
 }
 
 @Observable
-class ImageRepository: FavouriteService, DownloadService {
+class ImageRepository: NSObject, FavouriteService, DownloadService {
   
   internal let downloader: ImageDownloader
   internal let favouriteStore: FavouriteImageStore
@@ -72,7 +72,7 @@ extension ImageRepository {
   }
   
   func toggleFavourite(_ image: Image, in context: ModelContext) {
-    toggleFavourite(image, in: context)
+    favouriteStore.toggleFavourite(image, context: context)
   }
 }
 

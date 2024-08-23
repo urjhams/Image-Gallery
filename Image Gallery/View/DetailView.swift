@@ -12,9 +12,10 @@ struct DetailView: View {
   @Environment(\.modelContext) private var modelContext
   @Environment(ImageRepository.self) private var repository
   let image: Image
+  @State var isFavourte = false
   
   var body: some View {
-    VStack {
+    NavigationView {
       if let url = URL(string: image.url) {
         CachedAsyncImage(url: url) { image in
           image
@@ -25,10 +26,17 @@ struct DetailView: View {
         }
       }
     }
+    .onAppear {
+      isFavourte = repository.isFavourite(image, in: modelContext)
+    }
     .toolbar {
-      ToolbarItem(placement: .navigationBarLeading) {
-        Button(repository.isFavourite(image, in: modelContext) ? "heart.fill" : "heart") {
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Button(
+          "",
+          systemImage: isFavourte ? "heart.fill" : "heart"
+        ) {
           repository.toggleFavourite(image, in: modelContext)
+          isFavourte = repository.isFavourite(image, in: modelContext)
         }
       }
     }

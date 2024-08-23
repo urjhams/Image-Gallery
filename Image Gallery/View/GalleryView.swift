@@ -38,10 +38,12 @@ struct GalleryView: View {
 }
 
 #Preview {
-  GalleryView(viewModel: GalleryViewModel(
+  @State var repo = ImageRepository(downloader: .init(), favouriteStore: .init())
+  return GalleryView(viewModel: GalleryViewModel(
     repository: ImageRepository(
       downloader: .init(),
       favouriteStore: .init()
     ))
   )
+  .environment(repo)
 }
