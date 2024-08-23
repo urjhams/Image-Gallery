@@ -22,6 +22,8 @@ protocol FavouriteService {
   
   func removeFavourite(id: Int, in context: ModelContext)
   
+  func toggleFavourite(_ image: Image, in context: ModelContext)
+  
   func isFavourite(_ image: Image, in context: ModelContext) -> Bool
   
   func fetchFavourites(in context: ModelContext) throws -> [ImageEntity]
@@ -31,6 +33,7 @@ protocol FavouriteService {
 
 @Observable
 class ImageRepository: FavouriteService, DownloadService {
+  
   internal let downloader: ImageDownloader
   internal let favouriteStore: FavouriteImageStore
   
@@ -66,6 +69,10 @@ extension ImageRepository {
   
   func syncFavourites(from fetchedImages: [Image], in context: ModelContext) throws {
     try favouriteStore.syncFavourites(from: fetchedImages, context: context)
+  }
+  
+  func toggleFavourite(_ image: Image, in context: ModelContext) {
+    toggleFavourite(image, in: context)
   }
 }
 

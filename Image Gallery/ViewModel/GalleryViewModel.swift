@@ -30,11 +30,7 @@ class GalleryViewModel {
   }
   
   func toggleFavourite(_ image: Image, in context: ModelContext) {
-    if isFavourite(image, in: context) {
-      repository.removeFavourite(id: image.id, in: context)
-    } else {
-      repository.addFavourite(image, in: context)
-    }
+    repository.toggleFavourite(image, in: context)
   }
   
   func isFavourite(_ image: Image, in context: ModelContext) -> Bool {

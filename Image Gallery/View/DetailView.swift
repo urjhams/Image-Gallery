@@ -27,8 +27,8 @@ struct DetailView: View {
     }
     .toolbar {
       ToolbarItem(placement: .navigationBarLeading) {
-        Button("") {
-          
+        Button(repository.isFavourite(image, in: modelContext) ? "heart.fill" : "heart") {
+          repository.toggleFavourite(image, in: modelContext)
         }
       }
     }

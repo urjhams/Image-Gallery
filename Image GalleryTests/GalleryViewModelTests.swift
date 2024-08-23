@@ -10,6 +10,7 @@ import XCTest
 import SwiftData
 
 class MockRepository: Repository {
+  
   @MainActor
   var favouriteStore = FavouriteImageStore()
     
@@ -35,6 +36,10 @@ class MockRepository: Repository {
   
   @MainActor func syncFavourites(from fetchedImages: [Image], in context: ModelContext) throws {
     try favouriteStore.syncFavourites(from: fetchedImages, context: context)
+  }
+  
+  @MainActor func toggleFavourite(_ image: Image_Gallery.Image, in context: ModelContext) {
+    favouriteStore.toggleFavourite(image, context: context)
   }
   
   func fetchImages() async throws -> [Image] {
@@ -76,9 +81,7 @@ final class GalleryViewModelTests: XCTestCase {
       Image(id: 1, albumId: 1, title: "Photo 1", url: "url1", thumbnailUrl: "thumb1")
     ]
     
-    print("-------", mock.mockImages)
     try await viewModel.loadImages()
-    print("-------", viewModel.images)
     XCTAssertEqual(viewModel.images.count, 1)
     XCTAssertEqual(viewModel.images.first?.title, "Photo 1")
   }

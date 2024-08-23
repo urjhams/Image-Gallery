@@ -26,6 +26,14 @@ class FavouriteImageStore {
     try? context.save()
   }
   
+  func toggleFavourite(_ image: Image, context: ModelContext) {
+    if isFavourite(image, context: context) {
+      removeFavourite(id: image.id, context: context)
+    } else {
+      addFavourite(image, context: context)
+    }
+  }
+  
   func isFavourite(_ image: Image, context: ModelContext) -> Bool {
     let id = image.id
     let predicate = #Predicate<ImageEntity> { $0.id == id }
