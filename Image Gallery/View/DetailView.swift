@@ -12,10 +12,10 @@ struct DetailView: View {
   @Environment(\.modelContext) private var modelContext
   @Environment(ImageRepository.self) private var repository
   let image: ImageEntity
-  @State var isFavourte = false
+  @State var isFavourite = false
   
   var body: some View {
-    NavigationView {
+    VStack {
       if let url = URL(string: image.url) {
         CachedAsyncImage(url: url) { image in
           image
@@ -24,21 +24,34 @@ struct DetailView: View {
         } placeholder: {
           ProgressView()
         }
+      } else {
+        Spacer()
       }
+      
+      Button(
+        "",
+        systemImage: isFavourite ? "heart.fill" : "heart"
+      ) {
+        repository.toggleFavourite(image, in: modelContext)
+        isFavourite = repository.isFavourite(id: image.id, in: modelContext)
+      }
+      .font(.largeTitle)
+      .padding()
     }
+//    .toolbar {
+//      ToolbarItem(placement: .navigationBarTrailing) {
+//        Button(
+//          "",
+//          systemImage: isFavourite ? "heart.fill" : "heart"
+//        ) {
+//          repository.toggleFavourite(image, in: modelContext)
+//          isFavourite = repository.isFavourite(id: image.id, in: modelContext)
+//        }
+//      }
+//    }
+    
     .onAppear {
-      isFavourte = repository.isFavourite(id: image.id, in: modelContext)
-    }
-    .toolbar {
-      ToolbarItem(placement: .navigationBarTrailing) {
-        Button(
-          "",
-          systemImage: isFavourte ? "heart.fill" : "heart"
-        ) {
-          repository.toggleFavourite(image, in: modelContext)
-          isFavourte = repository.isFavourite(id: image.id, in: modelContext)
-        }
-      }
+      isFavourite = repository.isFavourite(id: image.id, in: modelContext)
     }
   }
 }

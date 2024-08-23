@@ -28,6 +28,7 @@ struct GalleryView: View {
           }
         }
       }
+      .navigationViewStyle(StackNavigationViewStyle())
       .navigationTitle("Gallery")
       .task {
         try? await viewModel.loadImages()
