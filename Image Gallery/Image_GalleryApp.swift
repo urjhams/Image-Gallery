@@ -20,11 +20,17 @@ struct Image_GalleryApp: App {
       fatalError("Could not create ModelContainer: \(error)")
     }
   }()
+  
+  @State var repository = ImageRepository(
+    downloader: ImageDownloader(),
+    favouriteStore: FavouriteImageStore()
+  )
     
   var body: some Scene {
     WindowGroup {
       ContainerView()
     }
     .modelContainer(sharedModelContainer)
+    .environment(repository)
   }
 }

@@ -13,7 +13,7 @@ typealias Repository = FavouriteService & DownloadService
 @Observable
 class GalleryViewModel {
   var images: [Image] = []
-  private let repository: Repository
+  let repository: Repository
   
   init(repository: Repository) {
     self.repository = repository

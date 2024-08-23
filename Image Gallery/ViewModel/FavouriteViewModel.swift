@@ -5,4 +5,10 @@
 //  Created by Quân Đinh on 22.08.24.
 //
 
-import Foundation
+import SwiftUI
+import SwiftData
+
+@Observable
+class FavouriteViewModel {
+  
+}

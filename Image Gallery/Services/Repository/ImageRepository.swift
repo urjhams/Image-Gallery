@@ -29,6 +29,7 @@ protocol FavouriteService {
   func syncFavourites(from fetchedImages: [Image], in context: ModelContext) throws
 }
 
+@Observable
 class ImageRepository: FavouriteService, DownloadService {
   internal let downloader: ImageDownloader
   internal let favouriteStore: FavouriteImageStore

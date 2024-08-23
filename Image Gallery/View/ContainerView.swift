@@ -10,10 +10,7 @@ import SwiftUI
 struct ContainerView: View {
   @Environment(\.modelContext) private var modelContext
   
-  @State var repository = ImageRepository(
-    downloader: ImageDownloader(),
-    favouriteStore: FavouriteImageStore()
-  )
+  @Environment(ImageRepository.self) private var repository
   
   var body: some View {
     TabView {

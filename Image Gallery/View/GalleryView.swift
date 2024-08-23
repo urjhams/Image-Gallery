@@ -10,6 +10,7 @@ import SwiftUI
 struct GalleryView: View {
   @Environment(\.modelContext) private var modelContext
   
+  
   @State var viewModel: GalleryViewModel
   
   var body: some View {
@@ -17,9 +18,9 @@ struct GalleryView: View {
       ScrollView {
         LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
           ForEach(viewModel.images) { img in
-            if let thumbURL = URL(string: img.thumbnailUrl), let url = URL(string: img.url) {
+            if let thumbURL = URL(string: img.thumbnailUrl) {
               NavigationLink {
-                DetailView(item: .init(url: url))
+                DetailView(image: img)
               } label: {
                 ItemView(size: 100, item: .init(url: thumbURL))
                   .cornerRadius(20)
