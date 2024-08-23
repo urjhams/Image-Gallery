@@ -25,10 +25,6 @@ class GalleryViewModel {
     self.images = images
   }
   
-  func loadFavourite() {
-    
-  }
-  
   func toggleFavourite(_ image: Image, in context: ModelContext) {
     repository.toggleFavourite(image, in: context)
   }
