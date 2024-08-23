@@ -31,6 +31,7 @@
 		4FCBEF972C788F3000BE5555 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCBEF962C788F3000BE5555 /* Item.swift */; };
 		4FCBEF992C78906200BE5555 /* bullElk.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4FCBEF982C78906200BE5555 /* bullElk.jpg */; };
 		4FCBEF9B2C78936C00BE5555 /* GalleryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCBEF9A2C78936C00BE5555 /* GalleryViewModelTests.swift */; };
+		4FCBEF9D2C78A33100BE5555 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCBEF9C2C78A33100BE5555 /* ContainerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		4FCBEF962C788F3000BE5555 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		4FCBEF982C78906200BE5555 /* bullElk.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bullElk.jpg; sourceTree = "<group>"; };
 		4FCBEF9A2C78936C00BE5555 /* GalleryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewModelTests.swift; sourceTree = "<group>"; };
+		4FCBEF9C2C78A33100BE5555 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 				4FCBEF6E2C779CBE00BE5555 /* DetailView.swift */,
 				4FCBEF702C779CD600BE5555 /* FavouriteView.swift */,
 				4FCBEF942C788EFF00BE5555 /* ItemView.swift */,
+				4FCBEF9C2C78A33100BE5555 /* ContainerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				4FCBEF752C779CEA00BE5555 /* FavouriteViewModel.swift in Sources */,
 				4FCBEF6F2C779CBE00BE5555 /* DetailView.swift in Sources */,
 				4FCBEF882C77A56A00BE5555 /* Image.swift in Sources */,
+				4FCBEF9D2C78A33100BE5555 /* ContainerView.swift in Sources */,
 				4FCBEF712C779CD600BE5555 /* FavouriteView.swift in Sources */,
 				4FCBEF772C779D0000BE5555 /* ImageRepository.swift in Sources */,
 				4FCBEF7D2C779D2D00BE5555 /* FavouriteImageStore.swift in Sources */,

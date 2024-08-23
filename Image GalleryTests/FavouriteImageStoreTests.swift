@@ -40,7 +40,7 @@ final class FavouriteImageStoreTests: XCTestCase {
     sut = ImageRepository(
       downloader: ImageDownloader(),
       cacheService: ImageCacheService(), 
-      favouriteStore: FavouriteImageStore(context: container.mainContext)
+      favouriteStore: FavouriteImageStore()
     )
   }
   
@@ -52,24 +52,24 @@ final class FavouriteImageStoreTests: XCTestCase {
   
   @MainActor
   func testFetchEmpty() throws {
-    let favourites = try sut.fetchFavourites()
+    let favourites = try sut.fetchFavourites(in: container.mainContext)
     XCTAssertEqual(favourites.count, 0)
   }
   
   @MainActor
   func testAddFavourite() throws {
 
-    sut.addFavourite(img1)
+    sut.addFavourite(img1, in: container.mainContext)
     
-    var favourites = try sut.fetchFavourites()
+    var favourites = try sut.fetchFavourites(in: container.mainContext)
     
     XCTAssertEqual(favourites.count, 1)
     XCTAssertEqual(favourites.first?.id, img1.id)
     XCTAssertEqual(favourites.first?.title, img1.title)
         
-    sut.addFavourite(img2)
+    sut.addFavourite(img2, in: container.mainContext)
     
-    favourites = try sut.fetchFavourites()
+    favourites = try sut.fetchFavourites(in: container.mainContext)
     
     XCTAssertEqual(favourites.count, 2)
   }
@@ -77,14 +77,14 @@ final class FavouriteImageStoreTests: XCTestCase {
   @MainActor
   func testRemoveFavourite() throws {
     
-    sut.addFavourite(img1)
+    sut.addFavourite(img1, in: container.mainContext)
     
-    sut.addFavourite(img2)
-    var favourites = try sut.fetchFavourites()
+    sut.addFavourite(img2, in: container.mainContext)
+    var favourites = try sut.fetchFavourites(in: container.mainContext)
     XCTAssertEqual(favourites.count, 2)
     
-    sut.removeFavourite(favourites.first!)
-    favourites = try sut.fetchFavourites()
+    sut.removeFavourite(favourites.first!, in: container.mainContext)
+    favourites = try sut.fetchFavourites(in: container.mainContext)
     
     XCTAssertEqual(favourites.count, 1)
     XCTAssertEqual(favourites.first?.id, img2.id)
@@ -94,23 +94,23 @@ final class FavouriteImageStoreTests: XCTestCase {
   @MainActor
   func testIsFavourite() throws {
     
-    XCTAssertFalse(sut.isFavourite(img1))
+    XCTAssertFalse(sut.isFavourite(img1, in: container.mainContext))
     
-    sut.addFavourite(img1)
+    sut.addFavourite(img1, in: container.mainContext)
     
-    XCTAssertTrue(sut.isFavourite(img1))
+    XCTAssertTrue(sut.isFavourite(img1, in: container.mainContext))
   }
   
   @MainActor
   func testSyncFavourite() throws {
-    sut.addFavourite(img1)
-    var favourites = try sut.fetchFavourites()
+    sut.addFavourite(img1, in: container.mainContext)
+    var favourites = try sut.fetchFavourites(in: container.mainContext)
     XCTAssertEqual(favourites.first?.title, img1.title)
     
     var copy = img1
     copy.title = "new title image"
-    try sut.syncFavourites(from: [copy])
-    favourites = try sut.fetchFavourites()
+    try sut.syncFavourites(from: [copy], in: container.mainContext)
+    favourites = try sut.fetchFavourites(in: container.mainContext)
     XCTAssertEqual(favourites.first?.title, "new title image")
   }
   

@@ -13,23 +13,20 @@ final class DownloadServiceTests: XCTestCase {
   
   let config = ModelConfiguration(isStoredInMemoryOnly: true)
   
-  var container: ModelContainer!
   
   var sut: DownloadService!
   
   @MainActor
   override func setUpWithError() throws {
     try super.setUpWithError()
-    container = try ModelContainer(for: ImageEntity.self, configurations: config)
     sut = ImageRepository(
       downloader: ImageDownloader(),
       cacheService: ImageCacheService(),
-      favouriteStore: FavouriteImageStore(context: container.mainContext)
+      favouriteStore: FavouriteImageStore()
     )
   }
   
   override func tearDownWithError() throws {
-    container = nil
     sut = nil
     try super.tearDownWithError()
   }

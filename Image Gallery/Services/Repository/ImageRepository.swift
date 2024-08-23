@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 protocol CacheService {
   var cacheService: ImageCacheService { get }
@@ -39,15 +40,15 @@ protocol DownloadService {
 protocol FavouriteService {
   var favouriteStore: FavouriteImageStore { get }
   
-  func addFavourite(_ image: Image)
+  func addFavourite(_ image: Image, in context: ModelContext)
   
-  func removeFavourite(_ image: ImageEntity)
+  func removeFavourite(_ image: ImageEntity, in context: ModelContext)
   
-  func isFavourite(_ image: Image) -> Bool
+  func isFavourite(_ image: Image, in context: ModelContext) -> Bool
   
-  func fetchFavourites() throws -> [ImageEntity]
+  func fetchFavourites(in context: ModelContext) throws -> [ImageEntity]
   
-  func syncFavourites(from fetchedImages: [Image]) throws
+  func syncFavourites(from fetchedImages: [Image], in context: ModelContext) throws
 }
 
 class ImageRepository: CacheService, FavouriteService, DownloadService {
@@ -71,24 +72,24 @@ class ImageRepository: CacheService, FavouriteService, DownloadService {
 /// favourite storage
 @MainActor
 extension ImageRepository {
-  func addFavourite(_ image: Image) {
-    favouriteStore.addFavourite(image)
+  func addFavourite(_ image: Image, in context: ModelContext) {
+    favouriteStore.addFavourite(image, context: context)
   }
   
-  func removeFavourite(_ image: ImageEntity) {
-    favouriteStore.removeFavourite(image)
+  func removeFavourite(_ image: ImageEntity, in context: ModelContext) {
+    favouriteStore.removeFavourite(image, context: context)
   }
   
-  func isFavourite(_ image: Image) -> Bool {
-    favouriteStore.isFavourite(image)
+  func isFavourite(_ image: Image, in context: ModelContext) -> Bool {
+    favouriteStore.isFavourite(image, context: context)
   }
   
-  func fetchFavourites() throws -> [ImageEntity] {
-    try favouriteStore.fetchFavourites()
+  func fetchFavourites(in context: ModelContext) throws -> [ImageEntity] {
+    try favouriteStore.fetchFavourites(context: context)
   }
   
-  func syncFavourites(from fetchedImages: [Image]) throws {
-    try favouriteStore.syncFavourites(from: fetchedImages)
+  func syncFavourites(from fetchedImages: [Image], in context: ModelContext) throws {
+    try favouriteStore.syncFavourites(from: fetchedImages, context: context)
   }
 }
 

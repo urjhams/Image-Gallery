@@ -10,41 +10,37 @@ import XCTest
 import SwiftData
 
 class MockRepository: Repository {
+  let container = try! ModelContainer(
+    for: ImageEntity.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+  )
   
   @MainActor
-  var favouriteStore: FavouriteImageStore = {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: ImageEntity.self, configurations: config)
-    return FavouriteImageStore(context: container.mainContext)
-  }()
+  var favouriteStore = FavouriteImageStore()
   
   var cacheService = ImageCacheService()
   
   var downloader = ImageDownloader()
   
   var mockImages: [Image] = []
-  
-  var container: ModelContainer!
-  
     
-  @MainActor func addFavourite(_ image: Image) {
-    favouriteStore.addFavourite(image)
+  @MainActor func addFavourite(_ image: Image, in context: ModelContext) {
+    favouriteStore.addFavourite(image, context: context)
   }
   
-  @MainActor func removeFavourite(_ image: ImageEntity) {
-    favouriteStore.removeFavourite(image)
+  @MainActor func removeFavourite(_ image: ImageEntity, in context: ModelContext) {
+    favouriteStore.removeFavourite(image, context: context)
   }
   
-  @MainActor func isFavourite(_ image: Image) -> Bool {
-    favouriteStore.isFavourite(image)
+  @MainActor func isFavourite(_ image: Image, in context: ModelContext) -> Bool {
+    favouriteStore.isFavourite(image, context: container.mainContext)
   }
   
-  @MainActor func fetchFavourites() throws -> [ImageEntity] {
-    try favouriteStore.fetchFavourites()
+  @MainActor func fetchFavourites(in context: ModelContext) throws -> [ImageEntity] {
+    try favouriteStore.fetchFavourites(context: context)
   }
   
-  @MainActor func syncFavourites(from fetchedImages: [Image]) throws {
-    try favouriteStore.syncFavourites(from: fetchedImages)
+  @MainActor func syncFavourites(from fetchedImages: [Image], in context: ModelContext) throws {
+    try favouriteStore.syncFavourites(from: fetchedImages, context: context)
   }
   
   func fetchImages() async throws -> [Image] {

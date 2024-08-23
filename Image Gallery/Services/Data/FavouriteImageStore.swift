@@ -8,26 +8,19 @@
 import Foundation
 import SwiftData
 
-@MainActor
 class FavouriteImageStore {
-  private let context: ModelContext
-  
-  init(context: ModelContext) {
-    self.context = context
-  }
-  
-  func addFavourite(_ image: Image) {
+  func addFavourite(_ image: Image, context: ModelContext) {
     let entity = ImageEntity(from: image)
     context.insert(entity)
     try? context.save()
   }
   
-  func removeFavourite(_ image: ImageEntity) {
+  func removeFavourite(_ image: ImageEntity, context: ModelContext) {
     context.delete(image)
     try? context.save()
   }
   
-  func isFavourite(_ image: Image) -> Bool {
+  func isFavourite(_ image: Image, context: ModelContext) -> Bool {
     let id = image.id
     let predicate = #Predicate<ImageEntity> { $0.id == id }
     var descriptor = FetchDescriptor<ImageEntity>(predicate: predicate)
@@ -39,13 +32,13 @@ class FavouriteImageStore {
     return true
   }
   
-  func fetchFavourites() throws -> [ImageEntity] {
+  func fetchFavourites(context: ModelContext) throws -> [ImageEntity] {
     let descriptor = FetchDescriptor<ImageEntity>()
     return try context.fetch(descriptor)
   }
   
-  func syncFavourites(from fetchedImages: [Image]) throws {
-    let currentFavourites = try fetchFavourites()
+  func syncFavourites(from fetchedImages: [Image], context: ModelContext) throws {
+    let currentFavourites = try fetchFavourites(context: context)
     let currentIds = currentFavourites.map(\.id)
     
     fetchedImages
