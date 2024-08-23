@@ -8,11 +8,23 @@
 import SwiftUI
 
 struct DetailView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+  let item: Item
+  
+  var body: some View {
+    AsyncImage(url: item.url) { image in
+      image
+        .resizable()
+        .scaledToFit()
+    } placeholder: {
+      ProgressView()
     }
+  }
 }
 
 #Preview {
-    DetailView()
+  if let url = Bundle.main.url(forResource: "bullElk", withExtension: "jpg") {
+    DetailView(item: Item(url: url))
+  } else {
+    Spacer()
+  }
 }
