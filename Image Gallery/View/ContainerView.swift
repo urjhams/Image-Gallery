@@ -10,34 +10,18 @@ import SwiftUI
 struct ContainerView: View {
   @Environment(\.modelContext) private var modelContext
   
-  @State var repository: ImageRepository = {
-    .init(
-      downloader: ImageDownloader(),
-      cacheService: ImageCacheService(),
-      favouriteStore: FavouriteImageStore()
-    )
-  }()
-  
-  @State var galleryViewModel: GalleryViewModel!
-  
-  init() {
-    repository = .init(
-      downloader: ImageDownloader(),
-      cacheService: ImageCacheService(),
-      favouriteStore: FavouriteImageStore()
-    )
-
-    galleryViewModel = .init(repository: repository)
-  }
+  @State var repository = ImageRepository(
+    downloader: ImageDownloader(),
+    cacheService: ImageCacheService(),
+    favouriteStore: FavouriteImageStore()
+  )
   
   var body: some View {
     TabView {
-      if let model = galleryViewModel {
-        GalleryView(viewModel: model)
-          .tabItem {
-            Label("Gallery", systemImage: "photo.stack")
-          }
-      }
+      GalleryView(viewModel: .init(repository: repository))
+        .tabItem {
+          Label("Gallery", systemImage: "photo.stack")
+        }
     }
   }
 }
