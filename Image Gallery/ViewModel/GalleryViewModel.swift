@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import SwiftData
 
-typealias Repository = CacheService & FavouriteService & DownloadService
+typealias Repository = FavouriteService & DownloadService
 
 @Observable
 class GalleryViewModel {
@@ -24,20 +25,19 @@ class GalleryViewModel {
     self.images = images
   }
   
-  func toggleFavourite(_ image: Image) {
-    if isFavourite(image) {
-      repository.removeImage(for: "\(image.id)")
+  func loadFavourite() {
+    
+  }
+  
+  func toggleFavourite(_ image: Image, in context: ModelContext) {
+    if isFavourite(image, in: context) {
+      repository.removeFavourite(id: image.id, in: context)
     } else {
-      if let data = try? JSONEncoder().encode(image) {
-        repository.setImage(data, for: "\(image.id)")
-      }
+      repository.addFavourite(image, in: context)
     }
   }
   
-  func isFavourite(_ image: Image) -> Bool {
-    guard let _ = repository.getImage(for: "\(image.id)") else {
-      return false
-    }
-    return true
+  func isFavourite(_ image: Image, in context: ModelContext) -> Bool {
+    repository.isFavourite(image, in: context)
   }
 }

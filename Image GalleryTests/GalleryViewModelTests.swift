@@ -10,15 +10,9 @@ import XCTest
 import SwiftData
 
 class MockRepository: Repository {
-  let container = try! ModelContainer(
-    for: ImageEntity.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-  )
-  
   @MainActor
   var favouriteStore = FavouriteImageStore()
-  
-  var cacheService = ImageCacheService()
-  
+    
   var downloader = ImageDownloader()
   
   var mockImages: [Image] = []
@@ -27,12 +21,12 @@ class MockRepository: Repository {
     favouriteStore.addFavourite(image, context: context)
   }
   
-  @MainActor func removeFavourite(_ image: ImageEntity, in context: ModelContext) {
-    favouriteStore.removeFavourite(image, context: context)
+  @MainActor func removeFavourite(id: Int, in context: ModelContext) {
+    favouriteStore.removeFavourite(id: id, context: context)
   }
   
   @MainActor func isFavourite(_ image: Image, in context: ModelContext) -> Bool {
-    favouriteStore.isFavourite(image, context: container.mainContext)
+    favouriteStore.isFavourite(image, context: context)
   }
   
   @MainActor func fetchFavourites(in context: ModelContext) throws -> [ImageEntity] {
@@ -55,13 +49,20 @@ class MockRepository: Repository {
 
 final class GalleryViewModelTests: XCTestCase {
   
+  var context: ModelContext!
+  
   var viewModel: GalleryViewModel!
   var mock: MockRepository!
   
+  @MainActor
   override func setUpWithError() throws {
     try super.setUpWithError()
     mock = MockRepository()
     viewModel = GalleryViewModel(repository: mock)
+    let container = try! ModelContainer(
+      for: ImageEntity.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+    )
+    context = container.mainContext
   }
   
   override func tearDownWithError() throws {
@@ -86,15 +87,15 @@ final class GalleryViewModelTests: XCTestCase {
     let image = Image(id: 1, albumId: 1, title: "Photo 1", url: "url1", thumbnailUrl: "thumb1")
     
     // Initially, it should not be a favourite
-    XCTAssertFalse(viewModel.isFavourite(image))
+    XCTAssertFalse(viewModel.isFavourite(image, in: context))
     
     // Toggle favourite to add
-    viewModel.toggleFavourite(image)
-    XCTAssertTrue(viewModel.isFavourite(image))
+    viewModel.toggleFavourite(image, in: context)
+    XCTAssertTrue(viewModel.isFavourite(image, in: context))
     
     // Toggle favourite to remove
-    viewModel.toggleFavourite(image)
-    XCTAssertFalse(viewModel.isFavourite(image))
+    viewModel.toggleFavourite(image, in: context)
+    XCTAssertFalse(viewModel.isFavourite(image, in: context))
   }
   
 }

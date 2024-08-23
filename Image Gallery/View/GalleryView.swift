@@ -40,7 +40,6 @@ struct GalleryView: View {
   GalleryView(viewModel: GalleryViewModel(
     repository: ImageRepository(
       downloader: .init(),
-      cacheService: .init(),
       favouriteStore: .init()
     ))
   )

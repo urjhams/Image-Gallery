@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 struct ItemView: View {
   let size: Double
@@ -13,7 +14,7 @@ struct ItemView: View {
   
   var body: some View {
     ZStack(alignment: .topTrailing) {
-      AsyncImage(url: item.url) { image in
+      CachedAsyncImage(url: item.url) { image in
         image
           .resizable()
           .scaledToFill()

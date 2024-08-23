@@ -21,7 +21,6 @@ final class DownloadServiceTests: XCTestCase {
     try super.setUpWithError()
     sut = ImageRepository(
       downloader: ImageDownloader(),
-      cacheService: ImageCacheService(),
       favouriteStore: FavouriteImageStore()
     )
   }

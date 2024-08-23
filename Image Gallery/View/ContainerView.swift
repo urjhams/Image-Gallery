@@ -12,7 +12,6 @@ struct ContainerView: View {
   
   @State var repository = ImageRepository(
     downloader: ImageDownloader(),
-    cacheService: ImageCacheService(),
     favouriteStore: FavouriteImageStore()
   )
   

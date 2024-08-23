@@ -39,7 +39,6 @@ final class FavouriteImageStoreTests: XCTestCase {
     container = try ModelContainer(for: ImageEntity.self, configurations: config)
     sut = ImageRepository(
       downloader: ImageDownloader(),
-      cacheService: ImageCacheService(), 
       favouriteStore: FavouriteImageStore()
     )
   }
@@ -83,7 +82,7 @@ final class FavouriteImageStoreTests: XCTestCase {
     var favourites = try sut.fetchFavourites(in: container.mainContext)
     XCTAssertEqual(favourites.count, 2)
     
-    sut.removeFavourite(favourites.first!, in: container.mainContext)
+    sut.removeFavourite(id: favourites.first!.id, in: container.mainContext)
     favourites = try sut.fetchFavourites(in: container.mainContext)
     
     XCTAssertEqual(favourites.count, 1)

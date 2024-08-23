@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 struct DetailView: View {
   let item: Item
   
   var body: some View {
-    AsyncImage(url: item.url) { image in
+    CachedAsyncImage(url: item.url) { image in
       image
         .resizable()
         .scaledToFit()

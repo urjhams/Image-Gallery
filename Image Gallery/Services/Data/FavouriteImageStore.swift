@@ -15,8 +15,14 @@ class FavouriteImageStore {
     try? context.save()
   }
   
-  func removeFavourite(_ image: ImageEntity, context: ModelContext) {
-    context.delete(image)
+  func removeFavourite(id: Int, context: ModelContext) {
+    let predicate = #Predicate<ImageEntity> { $0.id == id }
+    var descriptor = FetchDescriptor<ImageEntity>(predicate: predicate)
+    descriptor.fetchLimit = 1
+    guard let result = try? context.fetch(descriptor), let img = result.first else {
+      return
+    }
+    context.delete(img)
     try? context.save()
   }
   

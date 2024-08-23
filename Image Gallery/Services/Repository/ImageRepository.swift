@@ -8,28 +8,6 @@
 import Foundation
 import SwiftData
 
-protocol CacheService {
-  var cacheService: ImageCacheService { get }
-  
-  func getImage(for key: String) -> Data?
-  func setImage(_ data: Data, for key: String)
-  func removeImage(for key: String)
-}
-
-extension CacheService {
-  func getImage(for key: String) -> Data? {
-    cacheService.getImage(for: key)
-  }
-  
-  func setImage(_ data: Data, for key: String) {
-    cacheService.setImage(data, for: key)
-  }
-  
-  func removeImage(for key: String) {
-    cacheService.removeImage(for: key)
-  }
-}
-
 protocol DownloadService {
   var downloader: ImageDownloader { get }
   
@@ -42,7 +20,7 @@ protocol FavouriteService {
   
   func addFavourite(_ image: Image, in context: ModelContext)
   
-  func removeFavourite(_ image: ImageEntity, in context: ModelContext)
+  func removeFavourite(id: Int, in context: ModelContext)
   
   func isFavourite(_ image: Image, in context: ModelContext) -> Bool
   
@@ -51,20 +29,17 @@ protocol FavouriteService {
   func syncFavourites(from fetchedImages: [Image], in context: ModelContext) throws
 }
 
-class ImageRepository: CacheService, FavouriteService, DownloadService {
+class ImageRepository: FavouriteService, DownloadService {
   internal let downloader: ImageDownloader
-  internal let cacheService: ImageCacheService
   internal let favouriteStore: FavouriteImageStore
   
   private let decoder = JSONDecoder()
   
   init(
     downloader: ImageDownloader,
-    cacheService: ImageCacheService,
     favouriteStore: FavouriteImageStore
   ) {
     self.downloader = downloader
-    self.cacheService = cacheService
     self.favouriteStore = favouriteStore
   }
 }
@@ -76,8 +51,8 @@ extension ImageRepository {
     favouriteStore.addFavourite(image, context: context)
   }
   
-  func removeFavourite(_ image: ImageEntity, in context: ModelContext) {
-    favouriteStore.removeFavourite(image, context: context)
+  func removeFavourite(id: Int, in context: ModelContext) {
+    favouriteStore.removeFavourite(id: id, context: context)
   }
   
   func isFavourite(_ image: Image, in context: ModelContext) -> Bool {
