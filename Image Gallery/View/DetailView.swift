@@ -16,18 +16,28 @@ struct DetailView: View {
   
   var body: some View {
     VStack {
-      if let url = URL(string: image.url) {
-        CachedAsyncImage(url: url) { image in
+      Spacer()
+      CachedAsyncImage(
+        url: URL(string: image.url),
+        transaction: Transaction(
+          animation: .spring(
+            response: 0.3,
+            dampingFraction: 0.65,
+            blendDuration: 0.025)
+        )
+      ) { phase in
+        switch phase {
+        case .success(let image):
           image
             .resizable()
             .scaledToFit()
-        } placeholder: {
+            .transition(.opacity )
+        default:
           ProgressView()
         }
-      } else {
-        Spacer()
       }
-      
+      .clipShape(.rect(cornerRadius: 10))
+      Spacer()
       Button(
         "",
         systemImage: isFavourite ? "heart.fill" : "heart"
