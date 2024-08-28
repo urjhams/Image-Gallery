@@ -39,6 +39,12 @@ class ImageRepository: NSObject, FavouriteService, DownloadService {
   
   private let decoder = JSONDecoder()
   
+  private let session: URLSession = {
+    let config = URLSessionConfiguration.default
+    config.multipathServiceType = .handover
+    return URLSession(configuration: config)
+  }()
+  
   init(
     downloader: ImageDownloader,
     favouriteStore: FavouriteImageStore
@@ -82,8 +88,8 @@ extension ImageRepository {
     guard let url = URL(string: "https://jsonplaceholder.typicode.com/photos") else {
       throw NetworkError.badURL
     }
-    
-    let (data, response) = try await URLSession.shared.data(from: url)
+        
+    let (data, response) = try await session.data(from: url)
     
     guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
       throw NetworkError.invalidResponse
@@ -93,6 +99,6 @@ extension ImageRepository {
   }
   
   func getImage(from url: URL) async throws -> Data {
-    try await downloader.downloadImage(from: url)
+    try await downloader.downloadImage(from: url, session: session)
   }
 }

@@ -8,8 +8,8 @@
 import Foundation
 
 actor ImageDownloader {
-  func downloadImage(from url: URL) async throws -> Data {
-    let (data, response) = try await URLSession.shared.data(from: url)
+  func downloadImage(from url: URL, session: URLSession = .shared) async throws -> Data {
+    let (data, response) = try await session.data(from: url)
     
     guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
       throw NetworkError.invalidResponse
