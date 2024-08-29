@@ -28,6 +28,9 @@ struct GalleryView: View {
           }
         }
       }
+      .refreshable {
+        try? await viewModel.loadImages()
+      }
       .navigationViewStyle(StackNavigationViewStyle())
       .navigationTitle("Gallery")
       .task {
