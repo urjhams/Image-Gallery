@@ -19,7 +19,7 @@ struct ContainerView: View {
           Label("Gallery", systemImage: "photo.stack")
         }
       
-      FavouriteView(viewModel: .init(service: repository))
+      FavouriteView()
         .tabItem {
           Label("Favourite", systemImage: "heart.circle")
         }

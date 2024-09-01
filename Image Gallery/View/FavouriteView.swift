@@ -6,17 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct FavouriteView: View {
   @Environment(\.modelContext) private var modelContext
-  
-  @State var viewModel: FavouriteViewModel
+    
+  @Query var favourites: [ImageEntity]
   
   var body: some View {
     NavigationView {
       ScrollView {
         LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
-          ForEach(viewModel.favourites) { img in
+          ForEach(favourites) { img in
             if let thumbURL = URL(string: img.thumbnailURL) {
               NavigationLink {
                 DetailView(image: img)
@@ -29,9 +30,6 @@ struct FavouriteView: View {
         }
       }
       .navigationTitle("Favourte")
-      .task {
-        viewModel.loadFavourite(in: modelContext)
-      }
     }
   }
 }
