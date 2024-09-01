@@ -33,7 +33,7 @@ struct GalleryView: View {
       }
       .navigationViewStyle(StackNavigationViewStyle())
       .navigationTitle("Gallery")
-      .task {
+      .task(priority: .background) {
         try? await viewModel.loadImages()
       }
     }

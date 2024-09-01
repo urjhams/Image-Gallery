@@ -84,7 +84,7 @@ extension ImageRepository {
 
 /// download service
 extension ImageRepository {
-  func fetchImages() async throws -> [Image] {
+  nonisolated func fetchImages() async throws -> [Image] {
     guard let url = URL(string: "https://jsonplaceholder.typicode.com/photos") else {
       throw NetworkError.badURL
     }
