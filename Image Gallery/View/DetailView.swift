@@ -37,28 +37,18 @@ struct DetailView: View {
         }
       }
       .clipShape(.rect(cornerRadius: 10))
-      Spacer()
-      Button(
-        "",
-        systemImage: isFavourite ? "heart.fill" : "heart"
-      ) {
-        repository.toggleFavourite(image, in: modelContext)
-        isFavourite = repository.isFavourite(id: image.id, in: modelContext)
-      }
-      .font(.largeTitle)
-      .padding()
     }
-//    .toolbar {
-//      ToolbarItem(placement: .navigationBarTrailing) {
-//        Button(
-//          "",
-//          systemImage: isFavourite ? "heart.fill" : "heart"
-//        ) {
-//          repository.toggleFavourite(image, in: modelContext)
-//          isFavourite = repository.isFavourite(id: image.id, in: modelContext)
-//        }
-//      }
-//    }
+    .toolbar {
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Button(
+          "",
+          systemImage: isFavourite ? "heart.fill" : "heart"
+        ) {
+          repository.toggleFavourite(image, in: modelContext)
+          isFavourite = repository.isFavourite(id: image.id, in: modelContext)
+        }
+      }
+    }
     
     .onAppear {
       isFavourite = repository.isFavourite(id: image.id, in: modelContext)
